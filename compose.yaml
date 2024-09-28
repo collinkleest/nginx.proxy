@@ -1,0 +1,12 @@
+name: nginx.proxy
+
+services:
+  nginx:
+    container_name: nginx-proxy
+    image: 'ckleest/nginx.proxy:latest'
+    ports:
+      - "80:80"
+    restart: always
+    labels:
+      - "ningx.proxy"
+      - "nginx"

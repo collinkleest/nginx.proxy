@@ -1,6 +1,6 @@
 # .github/workflows/ci.yaml
 
-name: Validate NGINX Config
+name: Build Validate and Push Docker Image
 
 on:
   push:
@@ -13,6 +13,7 @@ on:
 
 jobs:
   validate-nginx:
+    name: Validate NGINX Config
     runs-on: ubuntu-latest
 
     steps:
@@ -23,10 +24,10 @@ jobs:
       run: |
         docker run --rm -v ${{ github.workspace }}/nginx.conf:/etc/nginx/conf.d/default.conf nginx:latest nginx -t
     
-    - name: Build Docker image
-      run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/nginx-custom:latest .
-
+  docker-push:
+    name: Docker Push NGINX Image
+    runs-on: ubuntu-latest
+    steps:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
   

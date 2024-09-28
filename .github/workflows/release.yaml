@@ -1,0 +1,39 @@
+# .github/workflows/release.yaml
+
+name: nginx.proxy release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git Pull Latest
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            mkdir -p ~/github && cd ~/github
+            git clone https://github.com/collinkleest/nginx.proxy.git
+            cd ~/github/nginx.proxy/
+            git pull
+  release:
+    runs-on: ubuntu-latest
+    needs: checkout
+    steps:
+      - name: Start Application
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd ~/github/nginx.proxy/
+            docker compose down
+            docker compose up -d

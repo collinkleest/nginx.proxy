@@ -19,3 +19,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
+          command: |
+            echo dns_cloudflare_api_token = ${{ secrets.CLOUDFLARE_TOKEN }} >> cloudflare.ini
+            chmod 600 cloudflare.ini
+            docker compose down
+            docker compose up -d

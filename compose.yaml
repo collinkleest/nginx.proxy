@@ -1,9 +1,16 @@
 name: nginx.proxy
 
+networks:
+ kong:
+  driver: bridge
+  name: kong-net 
+
 services:
   nginx:
     container_name: nginx-proxy
     image: 'ckleest/nginx.proxy:latest'
+    networks:
+      - kong
     ports:
       - "80:80"
     restart: always

@@ -12,7 +12,9 @@ services:
     networks:
       - kong
     ports:
-      - "80:80"
+      - 80:80
+      - 443:443
+
     restart: always
     labels:
       - "ningx.proxy"

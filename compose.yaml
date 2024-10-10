@@ -21,3 +21,21 @@ services:
     labels:
       - "ningx.proxy"
       - "nginx"
+
+  certbot:
+    image: certbot/dns-cloudflare:latest
+    container_name: certbot
+    volumes:
+      - certbot-etc:/etc/letsencrypt
+      - certbot-varlib:/var/lib/letsencrypt
+      - ./nginx/html:/var/www/html
+      - ./cloudflare.ini:/cloudflare.ini
+    environment:
+      - CERTBOT_EMAIL=collinkleest@gmail.com
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $!; done'"
+    networks:
+      - kong
+  
+volumes:
+  certbot-etc:
+  certbot-varlib:

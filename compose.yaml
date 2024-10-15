@@ -32,7 +32,6 @@ services:
       - ./cloudflare.ini:/cloudflare.ini
     environment:
       - CERTBOT_EMAIL=collinkleest@gmail.com
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $!; done'"
     networks:
       - kong
   

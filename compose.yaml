@@ -14,7 +14,7 @@ services:
       - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
       - /etc/letsencrypt/archive:/etc/letsencrypt/archive:ro
       - /etc/letsencrypt/renewal:/etc/letsencrypt/renewal:ro
-      - certbot-www:/var/www/certbot
+      # - certbot-www:/var/www/certbot
     networks:
       - kong
     ports:

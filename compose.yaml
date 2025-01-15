@@ -1,9 +1,9 @@
 name: nginx.proxy
 
 networks:
- kong:
-  driver: bridge
-  name: kong-net 
+  kong:
+    driver: bridge
+    name: kong-net
 
 services:
   nginx:
@@ -11,8 +11,9 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
-      - certbot-etc:/etc/letsencrypt
-      - certbot-varlib:/var/lib/letsencrypt
+      - /etc/letsencrypt/live:/etc/letsencrypt/live:ro
+      - /etc/letsencrypt/archive:/etc/letsencrypt/archive:ro
+      - /etc/letsencrypt/renewal:/etc/letsencrypt/renewal:ro
       - certbot-www:/var/www/certbot
     networks:
       - kong
@@ -24,23 +25,21 @@ services:
     labels:
       - "ningx.proxy"
       - "nginx"
+#   certbot:
+#     image: certbot/dns-cloudflare
+#     container_name: certbot
+#     volumes:
+#       - certbot-etc:/etc/letsencrypt
+#       - certbot-varlib:/var/lib/letsencrypt
+#       - certbot-www:/var/www/certbot
+#       - ./cloudflare.ini:/cloudflare.ini:ro
+#     environment:
+#       - CERTBOT_EMAIL=collinkleest@gmail.com
+#     entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 12h & wait $!; certbot renew; done'"
+#     networks:
+#       - kong
 
-  certbot:
-    image: certbot/dns-cloudflare
-    container_name: certbot
-    volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-varlib:/var/lib/letsencrypt
-      - certbot-www:/var/www/certbot
-      - ./cloudflare.ini:/cloudflare.ini:ro
-    environment:
-      - CERTBOT_EMAIL=collinkleest@gmail.com
-    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do sleep 12h & wait $!; certbot renew; done'"
-    networks:
-      - kong
-      
-  
-volumes:
-  certbot-etc:
-  certbot-varlib:
-  certbot-www:
+# volumes:
+#   certbot-etc:
+#   certbot-varlib:
+#   certbot-www:

@@ -44,6 +44,7 @@ sudo certbot certonly \
     --dns-cloudflare \
     --dns-cloudflare-credentials cloudflare.ini \
     -d "*.betlab.app" -d "betlab.app" -d "*.collinkleest.com" -d "collinkleest.com" \
+    -d "api.liteproxy.collinkleest.com" \
     --email collinkleest@gmail.com --agree-tos --non-interactive
 ```
 

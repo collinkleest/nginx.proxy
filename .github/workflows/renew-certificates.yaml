@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  release:
+  renew:
     runs-on: ubuntu-latest
     steps:
       - name: Start Application

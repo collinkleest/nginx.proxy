@@ -17,11 +17,11 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           command: |
-            CRON_JOB="*/1 * * * * echo "${{ secrets.PASSWORD }}" | sudo -S certbot certonly \
+            CRON_JOB="*/1 * * * * echo \"\$(date '+[%Y-%m-%d %H:%M:%S]') Running certbot...\" >> ~/logs/certbot.log && echo \"\${{ secrets.PASSWORD }}\" | sudo -S certbot certonly \
               --dns-cloudflare \
               --dns-cloudflare-credentials cloudflare.ini \
-              -d "*.betlab.app" -d "betlab.app" -d "*.collinkleest.com" -d "collinkleest.com" \
-              -d "api.liteproxy.collinkleest.com" \
-              --email collinkleest@gmail.com --agree-tos --non-interactive"
+              -d \"*.betlab.app\" -d \"betlab.app\" -d \"*.collinkleest.com\" -d \"collinkleest.com\" \
+              -d \"api.liteproxy.collinkleest.com\" \
+              --email collinkleest@gmail.com --agree-tos --non-interactive 2>&1 | sed \"s/^/\$(date '+[%Y-%m-%d %H:%M:%S]') /\" >> ~/logs/certbot.log"
             (crontab -l | grep -F "$CRON_JOB") || (crontab -l; echo "$CRON_JOB") | crontab -
                 

@@ -17,7 +17,7 @@ jobs:
           password: ${{ secrets.PASSWORD }}
           port: ${{ secrets.PORT }}
           command: |
-            sudo certbot certonly \
+            echo "${{ secrets.PASSWORD }}" | sudo -S certbot certonly \
               --dns-cloudflare \
               --dns-cloudflare-credentials cloudflare.ini \
               -d "*.betlab.app" -d "betlab.app" -d "*.collinkleest.com" -d "collinkleest.com" \

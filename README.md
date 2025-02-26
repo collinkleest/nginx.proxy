@@ -1,6 +1,11 @@
 # nginx.proxy
 
-Nginx proxy for personal server
+Nginx reverse proxy for personal home server. This server provides ssl termination and proxying for web requests coming into my personal server.
+
+## Table of Contents
+
+1. [Local Development](#local-development)
+2. [Certificates](#certificates)
 
 ### Local Development
 
@@ -53,3 +58,5 @@ Check cert
 ```bash
 sudo certbot certificates
 ```
+
+**Note:** Certificate expiration notifications are managed at redsift https://app.redsift.cloud/
